@@ -395,8 +395,8 @@ function init() {
 		Path: {{current_path_select}}
 	</span>
 	<span style="display: inline-block;"><button @click="save_data_diagram">Save Data Diagram</button>
-	 <button onclick="makeSVG()">Render as SVG</button>
-   <button onclick="makeImage()">Render as IMG</button>
+	 <button @click="export_to_svg">Render as SVG</button>
+   <button @click="export_to_img">Render as IMG</button>
    <button v-show="show_button_database" @click="show_db_diagram">Change Diagram Database</button>
 	</span>
 </div>
@@ -1750,6 +1750,61 @@ var app = new Vue({
 		  else {
 			  alert("Please select your project before load");
 		  }
+	  }
+	  ,
+	  //save img diagram 
+	  export_to_svg: function(){
+		  if(this.typetableDB==1){
+				var svg = myDiagram_DBTB.makeSvg({
+				scale: 1
+				});
+		  }
+		  else {
+			  var svg = myDiagram.makeSvg({
+				scale: 1
+				});
+		  }
+		  
+			svg.style.border = "1px solid black";
+			obj = document.getElementById("SVGArea");
+			obj.appendChild(svg);
+			if (obj.children.length > 0) {
+			  obj.replaceChild(svg, obj.children[0]);
+			}
+	  },
+	  export_to_img: function(){
+		  // type database 
+		  if(this.typetableDB==1){
+			  var imgsave =  myDiagram_DBTB.makeImage({
+			  scale: 1,
+			  // size: new go.Size(NaN,250),
+			//background: "rgba(0, 255, 0, 0.5)" ,// semi-transparent green background
+			 // background: "AntiqueWhite",
+			  background: "White",
+			  type: "image/jpeg",
+			  // quantity
+			  details: 1
+			});
+		  }
+		  else {
+			  var imgsave =  myDiagram.makeImage({
+			  scale: 1,
+			  // size: new go.Size(NaN,250),
+			//background: "rgba(0, 255, 0, 0.5)" ,// semi-transparent green background
+			 // background: "AntiqueWhite",
+			  background: "White",
+			  type: "image/jpeg",
+			  // quantity
+			  details: 1
+			});
+			
+		  }
+		  imgsave.style.border = "1px solid black";
+			obj = document.getElementById("SVGArea");
+			obj.appendChild(imgsave);
+			if (obj.children.length > 0) {
+			  obj.replaceChild(imgsave, obj.children[0]);
+			}
 	  }
 	  ,
 	  // case database diagram
