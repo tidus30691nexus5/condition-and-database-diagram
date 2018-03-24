@@ -96,14 +96,20 @@ function init() {
                   $(go.Shape, "LineV", { stroke: "lightgray", strokeWidth: 0.5 }),
                   $(go.Shape, "LineV", { stroke: "gray", strokeWidth: 0.5, interval: 10 })
                 ),
-          initialContentAlignment: go.Spot.Center,
+         // initialContentAlignment: go.Spot.Center,
           allowDrop: true,  // must be true to accept drops from the Palette
           "LinkDrawn": showLinkLabel,  // this DiagramEvent listener is defined below
           "LinkRelinked": showLinkLabel,
           "animationManager.duration": 800, // slightly longer than default (600ms) animation
           "undoManager.isEnabled": true  // enable undo & redo
         });
-
+/*
+		myDiagram.addDiagramListener("InitialLayoutCompleted", function(e) {
+			 var dia = e.diagram;
+            // add height for horizontal scrollbar
+            dia.div.style.height = (dia.documentBounds.height + 24) + "px";
+		});
+		*/
     // when the document is modified, add a "*" to the title and enable the "Save" button
     myDiagram.addDiagramListener("Modified", function(e) {
       var button = document.getElementById("SaveButton");
@@ -435,19 +441,22 @@ function init() {
     </span>
 
     <span v-show="typetableDB==0" style="display: inline-block; vertical-align: top; width:80%">
-      <div id="myDiagramDiv" style="border: solid 1px black; height: 680px"></div>
-    </span>
+      <div style="height:680px;overflow:auto">
+	  <div id="myDiagramDiv" style="border: solid 1px black; height: 2680px;width:2680px;"></div>
+		</div>
+	</span>
 
 	<!-- diagram db -->
 	<!-- diagram data table -->
 	<span v-show="typetableDB==1" style="display: inline-block; vertical-align: top; width:100px">
-      <div id="myPaletteDiv_cusDB" style="border: solid 1px black; height: 680px">
+      <div id="myPaletteDiv_cusDB" style="border: solid 1px black; height: 680px;width:2680px;">
 			<br><button style="margin-left:5px" @click="add_new_table_db">Add Table</button>
 	  </div>
     </span>
 <div v-show="typetableDB==1" style="position: relative;display: inline-block;width:80%;">
-  <div id="myDiagramDiv_database" style="border: solid 1px black; width:100%; height:680px"></div>
- 
+  <div style="height:680px;overflow:auto">
+  <div id="myDiagramDiv_database" style="border: solid 1px black; width:100%; height:2680px"></div>
+ </div>
  <div class="contextMenu_tree" id="contextMenu_tree_database">
         <ul>
 		<li style="background:blue;color:white"><a style="color:white"><span id="selected_field_db">Name</span></a></li>
